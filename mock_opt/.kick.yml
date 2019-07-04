@@ -1,0 +1,11 @@
+version: 1
+from: talpa-io/talpa-datalytics:testing
+
+
+command:
+  build:
+    - "sudo /kickstart/flavor/flavor-build.sh"
+  init:
+  run:
+  dev:
+  test:

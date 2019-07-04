@@ -1,0 +1,37 @@
+{
+  "name": "talpa/rockr",
+  "description": "Project description",
+  "keywords": ["Keyword1", "Keyword2"],
+  "license": "Proprietary",
+  "authors": [
+    { "name": "Matthias Leuffen", "email": "m@tth.es" }
+  ],
+  "repositories": [
+  ],
+  "require": {
+    "php": ">=7.1",
+    "ext-json": "*",
+    "ext-http": "*",
+    "phore/micro-app": "*",
+    "phore/http-client": "dev-master",
+    "phore/core": "dev-master",
+    "phore/status-page": "dev-master",
+    "phore/filesystem": "dev-master",
+    "phore/system": "dev-master",
+    "erusev/parsedown-extra": "dev-master",
+    "phore/cache": "dev-master",
+    "phore/objectstore": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Talpa\\Rockr\\": "src/"
+    },
+    "files": [
+      "config.php"
+    ]
+  },
+  "minimum-stability": "dev",
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  }
+}

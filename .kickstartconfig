@@ -1,0 +1,4 @@
+DOCKER_MOUNT_PARAMS="-v $PROGPATH/:/datalytics/   \
+                    -v $PROGPATH/mock_opt/:/opt/  \
+                    -v $PROGPATH/flavor/start.d/88-datalytics.sh:/kickstart/flavor/start.d/88-datalytics.sh  \
+                    -v $PROGPATH/flavor/flavor-build.sh:/kickstart/flavor/flavor-build.sh"

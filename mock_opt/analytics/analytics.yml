@@ -1,0 +1,7 @@
+
+
+demo_analytics:
+  cwd: "demo_analytics"
+  push:
+    - "bash push.sh --params :params"
+  pull: "bash pull.sh --params :params"

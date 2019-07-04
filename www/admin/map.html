@@ -1,0 +1,149 @@
+ <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+
+ </style>
+ <script language="JavaScript" src="/admin/assets/compjs.js"></script>
+
+ <div id="floating-panel">
+     <cj-form id="map" onsubmit="setHeatMap(this.data);">
+        <form style="display: inline">
+            <input type="text" name="tmid" title="TMID" value="T10404">
+            <input type="color" name="color" title="color" value="#FF0000">
+            <input type="date" name="from" title="Date from">
+            <input type="number" name="days" title="Anzahl Tage" value="1" style="width: 50px">
+            <input type="text" name="query" title="query" value="AND ">
+            <input type="number" name="sampleInterval" title="Sample Interval (sec) for map" style="width: 50px" value="30">
+            <button name="show">Show</button>
+        </form>
+
+
+     </cj-form>
+     <button onclick="clearGf()">Clear</button>
+     <input type="range" min="0" max="86400" id="time" onchange="updateDriveway()">
+     <p style="display: inline" id="date"></p>
+ </div>
+ <script>
+
+     // This example requires the Visualization library. Include the libraries=visualization
+     // parameter when you first load the API. For example:
+     // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
+
+     var map, heatmap;
+     var geofences = [];
+
+     var driveway = {};
+     var drivePosMarker = {};
+
+
+     var icons = [
+         "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
+         "https://maps.google.com/mapfiles/ms/icons/pink-dot.png",
+         "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+         "https://maps.google.com/mapfiles/ms/icons/purple-dot.png",
+         "https://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+     ];
+
+     var firstRequest = true;
+
+     function clearGf() {
+         for (gf of geofences) {
+             gf.setMap(null);
+         }
+         geofences.length = 0;
+     }
+
+     function updateDriveway() {
+         let val = $("#time").val();
+         for (tmid in driveway) {
+
+             let d = driveway[tmid][val];
+             $("#date").text(d.ts);
+             drivePosMarker[tmid].setPosition({"lat": d.lat, "lng": d.lng});
+         }
+     }
+
+     function setHeatMap(data) {
+         c.req("/admin/map/loadGf").withParams(data).json = (ret) => {
+
+             for (let curPoly of ret) {
+                 console.log("adding", curPoly);
+                 curPoly.fillColor = curPoly.color;
+                 curPoly.strokeOpacity =  0.8;
+                 curPoly.strokeWeight = 2;
+                 curPoly.strokeColor = curPoly.color;
+                 curPoly.map = map;
+                 var curPoloynom = new google.maps.Polygon(curPoly);
+
+                 if (firstRequest === true) {
+                     console.log("set center ", curPoly.paths[0].lat);
+                     map.setCenter({"lat": curPoly.paths[0].lat, "lng": curPoly.paths[0].lng});
+                     firstRequest = false;
+                 }
+
+                 google.maps.event.addListener(curPoloynom, 'click', function (event) {
+                     console.log (curPoly);
+                     alert(curPoly.info);
+                 });
+                 geofences.push(curPoloynom);
+             }
+         };
+         if (data.days == 1) {
+             let tmid = data.tmid;
+             console.log("icon", icons[Object.keys(drivePosMarker).length % 5], Object.keys(drivePosMarker).length);
+             drivePosMarker[tmid] = new google.maps.Marker({
+                 position: {lat: 0.0, lng: 0.0},
+                 map: map,
+               //  title: tmid,
+                 icon: icons[Object.keys(drivePosMarker).length % 5]
+
+             });
+
+             c.req("/admin/map/drive").withParams(data).json = (ret) => {
+                 driveway[tmid] = ret;
+                 $("#time").attr("max", driveway[tmid].length);
+                 console.log(ret);
+             }
+         } else {
+             $("#date").text("only on 1 day");
+         }
+     }
+
+
+     function initMap() {
+         document.getElementsByTagName("main")[0].innerHTML = "";
+         map = new google.maps.Map(document.getElementsByTagName('main')[0], {
+             zoom: 17,
+             center: {lat: 51.3275, lng: 8.3878},
+             mapTypeId: 'satellite'
+         });
+
+
+
+         var addListenersOnPolygon = function(polygon) {
+             google.maps.event.addListener(polygon, 'click', function (event) {
+                 alert(polygon.info);
+             });
+         };
+
+
+         heatmap = new google.maps.visualization.HeatmapLayer({
+             data: getPoints(),
+             radius: 40,
+             map: map
+         });
+     }
+
+     function changeOpacity() {
+         heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+     }
+
+     // Heatmap data: 500 Points
+     function getPoints() {
+         return [];
+     }
+
+ </script>
+ <script async defer
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUAeMzBkLlHjOyF8dco0FEnB5XQF-hgo4&libraries=visualization&callback=initMap">
+ </script>
