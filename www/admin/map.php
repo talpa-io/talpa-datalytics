@@ -10,6 +10,7 @@ ini_set("memory_limit", "512M");
 
 $cache = new \Phore\Cache\Cache(new \Phore\ObjectStore\ObjectStore(new \Phore\ObjectStore\Driver\FileSystemObjectStoreDriver("/tmp/cache1")));
 
+$tmid="undefined";
 
 $analyzer = new ClusterAnalyzer(20000);
 $from = $origFrom;
@@ -17,7 +18,7 @@ for ($curDay = 0; $curDay < $days; $curDay++) {
     $till = $from + 86400;
 
     phore_out("Pulling data: " . date("Y-m-d H:i:s", $from) . " - " . date("Y-m-d H:i:s", $till));
-    $data = phore_http_request("http://flesto.talpa-services.de/v1/M10404/influx")
+    $data = phore_http_request("http://flesto.talpa-services.de/v1/$tmid/influx")
         ->withCache($cache)
         ->withQueryParams(["q" => "SELECT * FROM motion_log_sec WHERE time >= {$from}s  AND time < {$till}s AND speed <0.01 "])
         ->send()->getBodyJson();
@@ -68,7 +69,7 @@ for ($curDay = 0; $curDay < $days; $curDay++) {
     $till = $from + 86400;
 
     phore_out("Pulling data: " . date("Y-m-d H:i:s", $from) . " - " . date("Y-m-d H:i:s", $till));
-    $data = phore_http_request("http://flesto.talpa-services.de/v1/M10404/influx")
+    $data = phore_http_request("http://flesto.talpa-services.de/v1/$tmid/influx")
         ->withCache($cache)
         ->withQueryParams(["q" => "SELECT * FROM motion_log_sec WHERE time >= {$from}s  AND time < {$till}s AND speed <0.01 "])
         ->send()->getBodyJson();
@@ -256,7 +257,7 @@ for ($curDay = 0; $curDay < $days; $curDay++) {
     }
 </script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUAeMzBkLlHjOyF8dco0FEnB5XQF-hgo4&libraries=visualization&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=&libraries=visualization&callback=initMap">
 </script>
 </body>
 </html>
