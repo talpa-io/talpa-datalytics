@@ -9,3 +9,4 @@ command:
   run:
   dev:
   test:
+    - "cd /datalytics && vendor/bin/phpunit"
