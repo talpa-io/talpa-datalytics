@@ -10,3 +10,6 @@ command:
   dev:
   test:
     - "cd /datalytics && vendor/bin/phpunit"
+
+  info:
+    - "env"
