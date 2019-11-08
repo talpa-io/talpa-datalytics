@@ -67,12 +67,13 @@ $app->router->onGet("/", function (App $app)  {
  ** Define Routes
  **/
 
-$app->router->on("/v1/:analytics/push", function (Request $request, string $analytics, array $anaConf) use ($app) {
+$app->router->on("/v1/:analytics/push", ["GET", "POST"], function (Request $request, string $analytics, array $anaConf) use ($app) {
 
     $params = [
         "type" => "push",
         "analytics_name" => $analytics
     ];
+
     foreach ($request->GET->list() as $name) {
         $params[$name] = $request->GET->get($name);
     }
@@ -100,7 +101,7 @@ $app->router->on("/v1/:analytics/push", function (Request $request, string $anal
     }
 
     return ["success" => true, "debug_output" => $output, "executed" => $push];
-}, ["GET", "POST"]);
+});
 
 
 $app->router->onGet("/v1/:analytics", function (Request $request, string $analytics, array $anaConf) {
