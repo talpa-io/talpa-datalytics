@@ -126,12 +126,13 @@ $app->router->onGet("/v1/:analytics", function (Request $request, string $analyt
     $pull = phore_pluck("pull", $anaConf, new \Exception("No pull service defined for '$analytics'"));
     chdir($cwd);
 
+    /*
     putenv("LANGUAGE=en_US.UTF-8");
     putenv("LANG=en_US.UTF-8");
 
     putenv("VIRTUAL_ENV=/opt/venv");
     putenv("PATH=/opt/venv/bin:".getenv("PATH"));
-
+    */
 
     $output = phore_proc($pull, [
         "params" => json_encode($params)
@@ -139,7 +140,7 @@ $app->router->onGet("/v1/:analytics", function (Request $request, string $analyt
 
     $data = json_decode($output->getSTDOUTContents(), true);
     if (! is_array($data))
-        throw new \InvalidArgumentException("command did not output valid json $output");
+        throw new \InvalidArgumentException("command did not output valid json '{$output->getSTDOUTContents()}'");
     if ($debug) {
         $data["_debug"] = explode("\n", $output->getSTDERRContents());
     }
