@@ -123,7 +123,7 @@ $app->router->onGet("/v1/:analytics", function (Request $request, string $analyt
 
 
     $cwd = phore_file(CONF_FILE)->withDirName()->withRelativePath(phore_pluck("cwd", $anaConf, ""));
-    $pull = phore_pluck("pull", $anaConf, new \Exception("No push service defined for '$analytics'"));
+    $pull = phore_pluck("pull", $anaConf, new \Exception("No pull service defined for '$analytics'"));
     chdir($cwd);
 
     putenv("LANGUAGE=en_US.UTF-8");
@@ -135,7 +135,7 @@ $app->router->onGet("/v1/:analytics", function (Request $request, string $analyt
 
     $output = phore_proc($pull, [
         "params" => json_encode($params)
-    ], $cwd, ["LANGUAGE=en_US.UTF-8", "LANG=en_US.UTF-8"])->wait();
+    ], $cwd, ["LANGUAGE=en_US.UTF-8", "LANG=en_US.UTF-8", "VIRTUAL_ENV=/opt/venv", "PATH=/opt/venv/bin:".getenv("PATH")])->wait();
 
     $data = json_decode($output->getSTDOUTContents(), true);
     if (! is_array($data))
