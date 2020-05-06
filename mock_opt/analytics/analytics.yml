@@ -7,7 +7,7 @@ demo_analytics:
   pull: "bash pull.sh --params :params"
 
 envtest:
-  cwd: "demo_analytics"
+  cwd: ".."
   push:
     - "bash push.sh --params :params"
   pull: "env"

@@ -440,12 +440,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phore/phore-core.git",
-                "reference": "2a1f73db204064036f4fa7e13d22759e16065634"
+                "reference": "12c1b2dc714a6d1f4ea49356f0010b8d824e66c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phore/phore-core/zipball/2a1f73db204064036f4fa7e13d22759e16065634",
-                "reference": "2a1f73db204064036f4fa7e13d22759e16065634",
+                "url": "https://api.github.com/repos/phore/phore-core/zipball/12c1b2dc714a6d1f4ea49356f0010b8d824e66c4",
+                "reference": "12c1b2dc714a6d1f4ea49356f0010b8d824e66c4",
                 "shasum": ""
             },
             "require": {
@@ -483,7 +483,7 @@
             ],
             "description": "Phore core library",
             "homepage": "https://infracamp.org/project/phore",
-            "time": "2020-04-16T08:36:20+00:00"
+            "time": "2020-04-29T17:32:38+00:00"
         },
         {
             "name": "phore/di-base",
@@ -745,12 +745,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phore/phore-objectstore.git",
-                "reference": "b65eae900a135e2260da2e8114709842c8d1c6fc"
+                "reference": "7864d26607ba3ef3a4bcc0bc206fada39f6cfdf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phore/phore-objectstore/zipball/b65eae900a135e2260da2e8114709842c8d1c6fc",
-                "reference": "b65eae900a135e2260da2e8114709842c8d1c6fc",
+                "url": "https://api.github.com/repos/phore/phore-objectstore/zipball/7864d26607ba3ef3a4bcc0bc206fada39f6cfdf5",
+                "reference": "7864d26607ba3ef3a4bcc0bc206fada39f6cfdf5",
                 "shasum": ""
             },
             "require": {
@@ -788,7 +788,7 @@
                 }
             ],
             "description": "Object store for local files, google, aws",
-            "time": "2020-04-28T08:30:08+00:00"
+            "time": "2020-05-02T13:16:45+00:00"
         },
         {
             "name": "phore/status-page",
@@ -843,12 +843,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phore/phore-system.git",
-                "reference": "755d5951ff5e9b1a5e84b96d83baad99e8cb5fe4"
+                "reference": "ec797e9de93a33def0748f5fe5a61c53d121bb78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phore/phore-system/zipball/755d5951ff5e9b1a5e84b96d83baad99e8cb5fe4",
-                "reference": "755d5951ff5e9b1a5e84b96d83baad99e8cb5fe4",
+                "url": "https://api.github.com/repos/phore/phore-system/zipball/ec797e9de93a33def0748f5fe5a61c53d121bb78",
+                "reference": "ec797e9de93a33def0748f5fe5a61c53d121bb78",
                 "shasum": ""
             },
             "require": {
@@ -879,7 +879,7 @@
             ],
             "description": "Execute shell commands",
             "homepage": "https://infracamp.org/project/phore",
-            "time": "2020-04-07T09:38:08+00:00"
+            "time": "2020-04-28T09:52:00+00:00"
         },
         {
             "name": "phore/theme-bootstrap",
@@ -2055,12 +2055,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5a8f1452cb7028e7c7173e430264c07fbc6fe858"
+                "reference": "94821def76750d335505c384d05fcb3394130615"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5a8f1452cb7028e7c7173e430264c07fbc6fe858",
-                "reference": "5a8f1452cb7028e7c7173e430264c07fbc6fe858",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/94821def76750d335505c384d05fcb3394130615",
+                "reference": "94821def76750d335505c384d05fcb3394130615",
                 "shasum": ""
             },
             "require": {
@@ -2130,7 +2130,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2020-04-27T05:03:54+00:00"
+            "time": "2020-05-05T05:16:12+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

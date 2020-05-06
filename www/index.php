@@ -106,6 +106,7 @@ $app->router->on("/v1/:analytics/push", ["GET", "POST"], function (Request $requ
 
 $app->router->onGet("/v1/:analytics", function (Request $request, string $analytics, array $anaConf) {
     $tmids = $request->GET->get("tmids", null);
+    $groupBy = $request->GET->get("group_by", null);
     $debug = (string)$request->GET->get("debug", 0);
 
     $params = [
@@ -114,8 +115,12 @@ $app->router->onGet("/v1/:analytics", function (Request $request, string $analyt
         "analytics_name" => $analytics,
         "debug" => $debug
     ];
+
+    if ($groupBy !== null)
+        $params["group_by"] = explode(";", $groupBy);
+
     foreach ($request->GET->list() as $name) {
-        if (in_array($name, ["tmids"])) {
+        if (in_array($name, ["tmids", "group_by"])) {
             continue; // Ignore raw TMIDs parameter
         }
         $params[$name] = $request->GET->get($name);
@@ -126,13 +131,14 @@ $app->router->onGet("/v1/:analytics", function (Request $request, string $analyt
     $pull = phore_pluck("pull", $anaConf, new \Exception("No pull service defined for '$analytics'"));
     chdir($cwd);
 
-    $output = phore_proc($pull, [
+    $proc = phore_proc($pull, [
         "params" => json_encode($params)
-    ], $cwd, ["LANGUAGE=en_US.UTF-8", "LANG=en_US.UTF-8", "VIRTUAL_ENV=/opt/venv", "PATH=/opt/venv/bin:".getenv("PATH")])->wait();
+    ], $cwd, ["LANGUAGE=en_US.UTF-8", "LANG=en_US.UTF-8", "VIRTUAL_ENV=/opt/venv", "PATH=/opt/venv/bin:".getenv("PATH")]);
+    $output = $proc->wait();
 
     $data = json_decode($output->getSTDOUTContents(), true);
     if (! is_array($data))
-        throw new \InvalidArgumentException("command did not output valid json '{$output->getSTDOUTContents()}'");
+        throw new \InvalidArgumentException("Command did not output valid json. Output is: '{$output->getSTDOUTContents()}' (Cmd: '{$proc->getCmd()}')");
     if ($debug) {
         $data["_debug"] = explode("\n", $output->getSTDERRContents());
     }
