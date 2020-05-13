@@ -2,7 +2,7 @@
 Datalytics test base container
 
 ## SIGTERM Trap
-The container will catch SIGTERM signal and will gracefully shutdown if the webserver is not busy or not responding
+The container will catch SIGTERM signal and will gracefully shutdown if the webserver is idle or non-responsive
 
 Steps executed when a SIGTERM signal is received
 
